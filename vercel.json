@@ -4,5 +4,5 @@
   "buildCommand": null,
   "outputDirectory": ".",
   "cleanUrls": true,
-  "rewrites": [{ "source": "/", "destination": "/ballet3d.html" }]
+  "rewrites": [{ "source": "/", "destination": "/releases/ballet3d_v6_published.html" }]
 }
