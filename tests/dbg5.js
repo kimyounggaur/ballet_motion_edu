@@ -1,0 +1,13 @@
+globalThis.THREE = require('../vendor/three.min.js');
+require('../src/core.js');
+const C = globalThis.BalletCore; const T3=globalThis.THREE;
+const f=v=>`(${v.x.toFixed(3)},${v.y.toFixed(3)},${v.z.toFixed(3)})`;
+const def = C.MOVES.find(m=>m.id==='tendu'); const Cm = C.compileMove(def, 70);
+console.log('tau per key', Cm.fks.map(o=>o.R.tau.toFixed(1)).join(' '));
+console.log('a per key', Cm.fks.map(o=>o.R.a.toFixed(1)).join(' '));
+console.log('knee per key', Cm.fks.map(o=>o.R.knee.toFixed(1)).join(' '));
+const p=Cm.poses[7]; const R=p.legs.R;
+console.log('static t=9 thigh z', f(new T3.Vector3(0,0,1).applyQuaternion(R.qThigh)), 'foot z', f(new T3.Vector3(0,0,1).applyQuaternion(R.qFoot)));
+const P=C.evalParams(Cm,9.0); console.log('eval t=9 R', P.legs.R.mode, 'tau', P.legs.R.fk.tau.toFixed(2), 'knee', P.legs.R.fk.knee, 's',P.legs.R.fk.s, 'ankle', JSON.stringify(P.legs.R.ankle));
+const pose=C.solvePose(P, null); const r=pose.legs.R;
+console.log('runtime thigh z', f(new T3.Vector3(0,0,1).applyQuaternion(r.qThigh)), 'foot z', f(new T3.Vector3(0,0,1).applyQuaternion(r.qFoot)), 'H',f(r.H),'A',f(r.A),' static H',f(R.H),'A',f(R.A));

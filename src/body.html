@@ -1,0 +1,112 @@
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <h1>발레 기본기 3D</h1>
+      <p>관절 인형으로 보는 바 앤 센터 기본 동작 · 각도와 무게중심을 실시간으로 확인합니다</p>
+    </div>
+    <div class="settings">
+      <div class="setting"><span>작업 다리</span>
+        <div class="seg" role="group" aria-label="작업 다리">
+          <button type="button" id="sideR" aria-pressed="true">오른쪽</button>
+          <button type="button" id="sideL" aria-pressed="false">왼쪽</button>
+        </div>
+      </div>
+      <label class="setting turnout" for="turnout"><span>턴아웃</span>
+        <input type="range" id="turnout" min="120" max="160" step="10" value="140" aria-describedby="turnoutOut">
+        <output id="turnoutOut" for="turnout">140°</output>
+      </label>
+    </div>
+  </header>
+
+  <nav class="moves" role="tablist" aria-label="동작" id="moveTabs"></nav>
+
+  <main class="grid">
+    <section class="stage-col" aria-label="3D 무대">
+      <div class="stage" id="stage">
+        <div class="hud hud-step" aria-live="polite">
+          <div class="idx num" id="hudIdx"></div>
+          <div class="title" id="hudTitle"></div>
+          <div class="fr" id="hudFr"></div>
+        </div>
+        <div class="hud hud-count">
+          <div class="lbl">카운트</div>
+          <div><span class="big" id="hudCount">5</span><span class="and" id="hudAnd"></span></div>
+        </div>
+        <div class="ghost-key hud" id="ghostKey" hidden><i></i>빨간 반투명 = 흔한 실수</div>
+        <div id="labels"></div>
+        <div class="hud hud-bottom">
+          <div class="cams" role="group" aria-label="카메라" id="cams">
+            <button type="button" data-cam="front">정면</button>
+            <button type="button" data-cam="q34">3/4</button>
+            <button type="button" data-cam="side">측면</button>
+            <button type="button" data-cam="back">뒷모습</button>
+            <button type="button" data-cam="top">위</button>
+          </div>
+          <div class="balance" id="balance">
+            <div class="row"><span>체중</span><span class="num" id="wTxt">왼 50 · 오 50</span></div>
+            <div class="wbar" aria-hidden="true"><i id="wFill"></i><b></b></div>
+            <div class="row"><span>무게중심</span><span id="comTxt" class="com-ok">지지면 안</span></div>
+            <div class="row" id="gRow" hidden><span>실수 자세</span><span id="gTxt" class="com-bad"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="transport">
+        <div class="controls">
+          <button type="button" class="btn" id="prevBtn" aria-label="이전 단계"><svg viewBox="0 0 16 16"><path d="M3 3h2v10H3zM14 3v10L6 8z"/></svg>이전</button>
+          <button type="button" class="btn play" id="playBtn" aria-label="재생"><svg viewBox="0 0 16 16" id="playIcon"><path d="M4 2.5v11l9.5-5.5z"/></svg><span id="playTxt">재생</span></button>
+          <button type="button" class="btn" id="nextBtn" aria-label="다음 단계">다음<svg viewBox="0 0 16 16"><path d="M11 3h2v10h-2zM2 3v10l8-5z"/></svg></button>
+          <span class="sp"></span>
+          <div class="seg" role="group" aria-label="속도" id="speeds">
+            <button type="button" data-speed="0.5">0.5×</button>
+            <button type="button" data-speed="0.75">0.75×</button>
+            <button type="button" data-speed="1">1×</button>
+          </div>
+        </div>
+        <div class="track" id="track" role="slider" aria-label="진행 위치" tabindex="0"></div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <section class="intro">
+        <h2><span id="mvName"></span> <span class="fr" id="mvFr"></span></h2>
+        <p id="mvDesc"></p>
+      </section>
+
+      <section class="card steps" aria-label="단계">
+        <ol id="steps"></ol>
+      </section>
+
+      <section class="card folds" aria-label="더 보기">
+        <details class="fold">
+          <summary>측정값</summary>
+          <div class="fold-body">
+            <table class="meas">
+              <thead><tr><th></th><th>왼쪽</th><th>오른쪽</th></tr></thead>
+              <tbody id="measBody"></tbody>
+            </table>
+            <div class="meas-foot" id="measFoot"></div>
+          </div>
+        </details>
+        <details class="fold">
+          <summary>흔한 실수와 비교</summary>
+          <div class="fold-body">
+            <div class="toggles" id="mistakes"></div>
+            <div class="mist-card" id="mistCard" hidden></div>
+          </div>
+        </details>
+        <details class="fold">
+          <summary>보기와 재생 옵션</summary>
+          <div class="fold-body">
+            <div class="toggles" id="toggles"></div>
+            <div class="toggles opt-row">
+              <button type="button" class="chip" id="stepStop" aria-pressed="false"><i></i>단계마다 멈춤</button>
+              <button type="button" class="chip" id="polish" aria-pressed="true" title="동작의 가속·감속, 손끝 후행, 시선, 호흡을 켜고 끕니다"><i></i>부드러운 동작 · 시선 · 호흡</button>
+              <button type="button" class="chip" id="metro" aria-pressed="false"><i></i>박자 소리</button>
+            </div>
+          </div>
+        </details>
+      </section>
+    </aside>
+  </main>
+</div>

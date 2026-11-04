@@ -1,0 +1,12 @@
+globalThis.THREE = require('../vendor/three.min.js');
+require('../src/core.js');
+const C = globalThis.BalletCore;
+const f=v=>`(${v.x.toFixed(3)},${v.y.toFixed(3)},${v.z.toFixed(3)})`;
+let def = C.MOVES.find(m=>m.id==='tendu');
+let Cm = C.compileMove(def, 70);
+Cm.poses.forEach((p,i)=>{ const R=p.legs.R; console.log(i,'t='+Cm.ts[i],R.mode,'el',(R.el||0).toFixed(1),'A',f(R.A),'heel',R.heelPt.y.toFixed(3),'ball',R.ballPt.y.toFixed(3),'tip',R.tipPt.y.toFixed(3),'pp',f(p.pp));});
+def = C.MOVES.find(m=>m.id==='positions'); Cm = C.compileMove(def, 70);
+const p=Cm.poses[4], P=Cm.keyParams[4]; const m=C.measure(p,P);
+console.log('2nd: com',f(p.com),'tgt',f(p.target),'poly',JSON.stringify(m.poly.map(q=>[+q.x.toFixed(3),+q.z.toFixed(3)])), 'dist', m.comDist);
+console.log('L heel',f(p.legs.L.heelPt),'ball',f(p.legs.L.ballPt),'tip',f(p.legs.L.tipPt));
+console.log('R heel',f(p.legs.R.heelPt),'ball',f(p.legs.R.ballPt),'tip',f(p.legs.R.tipPt));
